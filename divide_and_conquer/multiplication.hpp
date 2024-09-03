@@ -13,36 +13,41 @@ multiply
   unsigned int convertToInt(typename container::value_type)
 ) {
   container result(left.size() + right.size(), convertFromInt(0));
-  unsigned int carry = 0;
-  {
-    typename container::reverse_iterator li = left.rbegin();
-    typename container::reverse_iterator ri = right.rbegin();
-    unsigned int i = 0;
-    unsigned int j = 0;
-    while (li != left.rend())
-    {
-      j = 0;
-      while (ri != right.rend())
-      {
-        unsigned int num;
 
-        num = convertToInt(*li) * convertToInt(*ri) + convertToInt(result[i + j]) + carry;
-        carry = num / 10;
-        result[i + j] = convertFromInt(num % 10);
-        ++j;
-      }
-      ++i;
+  typename container::reverse_iterator lri = left.rbegin();
+  typename container::reverse_iterator rri = right.rbegin();
+  unsigned int carry = 0;
+  unsigned int i = 0;
+  unsigned int j = 0;
+  while (lri != left.rend())
+  {
+    j = 0;
+    rri = right.rbegin();
+    while (rri != right.rend())
+    {
+      unsigned int num;
+
+      num =
+        convertToInt(*lri) * convertToInt(*rri) + convertToInt(result[i + j]) + carry;
+      carry = num / 10;
+      result[i + j] = convertFromInt(num % 10);
+      ++j;
+      ++rri;
     }
     if (carry > 0)
     {
       result[i + j] = convertFromInt(carry);
-      ++i;
     }
-    result.erase(result.begin() + i + j, result.end());
+    carry = 0;
+    ++i;
+    ++lri;
+  }
+  while (result.size() > 1 && convertToInt(result.back()) == 0) {
+    result.pop_back();
   }
 
   typename container::iterator li = result.begin();
-  typename container::iterator ri = result.end();
+  typename container::iterator ri = --result.end();
   while (li < ri)
   {
     std::swap(*li, *ri);

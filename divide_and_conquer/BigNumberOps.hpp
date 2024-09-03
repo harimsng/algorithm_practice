@@ -4,37 +4,26 @@
 #include "subtraction.hpp"
 #include "multiplication.hpp"
 
-template <typename Container>
+template
+<
+  typename Container,
+  typename Container::value_type (*ConvertFromInt)(unsigned int),
+  unsigned int (*ConvertToInt)(typename Container::value_type)
+>
 struct BigNumberOps
 {
-  typedef typename Container::value_type  ValueType;
-  typedef ValueType (*ConvertFromInt)(unsigned int);
-  typedef unsigned int (*ConvertToInt)(ValueType);
-  typedef Container (*Operation)(Container&, Container&, ConvertFromInt, ConvertToInt); 
-  typedef Container (*SimpleOps)(Container&, Container&);
-
-  BigNumberOps() = delete;
+  BigNumberOps() = default;
   BigNumberOps(const BigNumberOps& instance) = delete;
   BigNumberOps operator=(const BigNumberOps& instance) = delete;
 
-  BigNumberOps(ConvertFromInt f, ConvertToInt t)
-  : 
-    add(nullptr),
-    sub([f, t](Container& l, Container& r) -> Container
-    {
-      return subtract<Container>(l, r, f, t);
-    }),
-    mul([f, t](Container& l, Container& r) -> Container
-    {
-      return multiply<Container>(l, r, f, t);
-    }),
-    div(nullptr)
+  Container sub(Container& l, Container& r)
   {
+    return subtract(l, r, ConvertFromInt, ConvertToInt);
   }
-  SimpleOps add;
-  SimpleOps sub;
-  SimpleOps mul;
-  SimpleOps div;
+  Container mul(Container& l, Container& r)
+  {
+    return multiply(l, r, ConvertFromInt, ConvertToInt);
+  }
 };
 
 #endif //_BIGNUMBEROPS_HPP_

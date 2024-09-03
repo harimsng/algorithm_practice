@@ -23,13 +23,12 @@ int main(int argc, char** argv)
   }
   if (argc != 4)
   {
-    std::cout << "usage: ./bignumcal  left  operator  right";
-    std::cout << "left and right must be zero or positive integer.";
-    std::cout << "- for subtraction and * for multiplication are currently supported operators.";
-    std::cout << "result will be sent to stdout";
+    std::cout << "usage: ./bignumcal  left  operator  right\n";
+    std::cout << "left and right must be zero or positive integer.\n";
+    std::cout << "'-' for subtraction and '*' or 'x' for multiplication are currently supported operators.\n";
     return 1;
   }
-  BigNumberOps<std::string> ops(convertFromInt, convertToInt);
+  BigNumberOps<std::string, convertFromInt, convertToInt> ops;
   std::string op(argv[2]);
   std::string result;
   std::string left(argv[1]);
@@ -37,7 +36,7 @@ int main(int argc, char** argv)
 
   if (op.size() > 1)
   {
-    std::cout << "invalid operator\n";
+    std::cout << "invalid operator " << op << "\n";
     return 1;
   }
   switch (op[0])
@@ -48,6 +47,7 @@ int main(int argc, char** argv)
     case '-':
       result = ops.sub(left, right);
       break;
+    case 'x':
     case '*':
       result = ops.mul(left, right);
       break;
@@ -55,7 +55,7 @@ int main(int argc, char** argv)
       std::cout << "division is not supported\n";
       break;
     default:
-      std::cout << "invalid operator\n";
+      std::cout << "invalid operator " << op[0] << "\n";
       break;
   }
   std::cout << result << '\n';

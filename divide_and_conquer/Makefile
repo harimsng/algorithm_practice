@@ -1,7 +1,7 @@
 NAME		= bignumcal
 
 CXX	 		= g++
-CXXFLAGS= -Wall -Wextra -Werror --std=c++11
+CXXFLAGS= -Wall -Wextra -Werror --std=c++17 -g -fsanitize=address
 
 SRC			= main.cpp
 OBJ			= $(SRC:%.cpp=%.o)
