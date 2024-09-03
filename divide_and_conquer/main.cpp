@@ -11,7 +11,6 @@ static unsigned int convertToInt(char c)
   return c - '0';
 }
 
-
 int test();
 
 int main(int argc, char** argv)
