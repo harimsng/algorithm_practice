@@ -1,9 +1,9 @@
-NAME		= subtraction
+NAME		= bignumcal
 
 CXX	 		= g++
 CXXFLAGS= -Wall -Wextra -Werror --std=c++11
 
-SRC			= subtraction.cpp
+SRC			= main.cpp
 OBJ			= $(SRC:%.cpp=%.o)
 
 all: $(NAME)
