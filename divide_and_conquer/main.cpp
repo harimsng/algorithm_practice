@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <chrono>
 
 #include "BigNumberOps.hpp"
 
@@ -104,6 +105,7 @@ int test()
       }
       std::getline(fs, b);
       std::getline(fs, c);
+      const auto start = std::chrono::steady_clock::now();
       switch (op)
       {
         case '-':
@@ -113,6 +115,12 @@ int test()
           answer = ops.mul(a, b);
           break;
       }
+      const auto end = std::chrono::steady_clock::now();
+      std::cout.setf(std::ios_base::fixed);
+      std::cout
+        << "N=" << a.size()
+        << " M=" << b.size()
+        << " interval=" << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() / 1000.0 << " us\n";
       if (answer != c)
       {
         std::cout << "FAIL\n";
