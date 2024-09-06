@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 
 #include "BigNumberOps.hpp"
 
@@ -17,7 +19,6 @@ int main(int argc, char** argv)
 {
   if (argc == 1)
   {
-    std::cout << "test\n";
     return test();
   }
   if (argc != 4)
@@ -62,5 +63,67 @@ int main(int argc, char** argv)
 
 int test()
 {
-  return 1;
+  std::fstream  fs;
+  std::string   testfile("test_cases.txt");
+  BigNumberOps<std::string, convertFromInt, convertToInt> ops;
+
+  fs.open(testfile, std::ios_base::in);
+  if (fs.bad() == true)
+  {
+    std::cerr << "failed to open " << testfile << '\n';
+  }
+  while (fs.good() == true)
+  {
+    std::string line;
+    char op;
+
+    std::getline(fs, line);
+    if (fs.eof() == true)
+    {
+      break;
+    }
+    if (line.compare("begin") != 0)
+    {
+      std::cerr << "invalid test file: " << line << '\n';
+      return 1;
+    }
+    std::getline(fs, line);
+    std::cout << "test for '" << line << "'\n";
+    op = line[0];
+    while (1)
+    {
+      std::string a;
+      std::string b;
+      std::string c;
+      std::string answer;
+
+      std::getline(fs, a);
+      if (a == "end") 
+      {
+        break;
+      }
+      std::getline(fs, b);
+      std::getline(fs, c);
+      switch (op)
+      {
+        case '-':
+          answer = ops.sub(a, b);
+          break;
+        case '*':
+          answer = ops.mul(a, b);
+          break;
+      }
+      if (answer != c)
+      {
+        std::cout << "FAIL\n";
+        if (answer.size() < 20)
+        {
+          std::cout << "answer: " << answer << " != " << c << '\n';
+        }
+        return 1;
+      }
+    }
+    std::cout << "test for '" << op << "' success\n";
+  }
+  return 0;
 }
