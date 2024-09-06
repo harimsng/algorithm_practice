@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <utility>
 #include <string>
 
 std::string multiply_internal(std::string& left, std::string& right);
