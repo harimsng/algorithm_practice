@@ -1,18 +1,11 @@
+#include <unistd.h>
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <chrono>
 
-#include "BigNumberOps.hpp"
-
-static char convertFromInt(unsigned int i)
-{
-  return i + '0';
-}
-static unsigned int convertToInt(char c)
-{
-  return c - '0';
-}
+#include "big_number_ops.hpp"
 
 int test();
 
@@ -29,7 +22,7 @@ int main(int argc, char** argv)
     std::cout << "'-' for subtraction and '*' or 'x' for multiplication are currently supported operators.\n";
     return 1;
   }
-  BigNumberOps<std::string, convertFromInt, convertToInt> ops;
+  // BigNumberOps<std::string, convertFromInt, convertToInt> ops;
   std::string op(argv[2]);
   std::string result;
   std::string left(argv[1]);
@@ -46,11 +39,11 @@ int main(int argc, char** argv)
       std::cout << "addition is not supported\n";
       break;
     case '-':
-      result = ops.sub(left, right);
+      result = subtract(left, right);
       break;
     case 'x':
     case '*':
-      result = ops.mul(left, right);
+      result = multiply(left, right);
       break;
     case '/':
       std::cout << "division is not supported\n";
@@ -66,7 +59,13 @@ int test()
 {
   std::fstream  fs;
   std::string   testfile("test_cases.txt");
-  BigNumberOps<std::string, convertFromInt, convertToInt> ops;
+  // BigNumberOps<std::string, convertFromInt, convertToInt> ops;
+
+  for (int i = 5; i >= 0; --i)
+  {
+    sleep(1);
+    std::cout << i << " seconds to start\n";
+  }
 
   fs.open(testfile, std::ios_base::in);
   if (fs.bad() == true)
@@ -109,10 +108,10 @@ int test()
       switch (op)
       {
         case '-':
-          answer = ops.sub(a, b);
+          answer = subtract(a, b);
           break;
         case '*':
-          answer = ops.mul(a, b);
+          answer = multiply(a, b);
           break;
       }
       const auto end = std::chrono::steady_clock::now();

@@ -1,8 +1,8 @@
 #ifndef _BIGNUMBEROPS_HPP_
 # define _BIGNUMBEROPS_HPP_
 
-#include "subtraction.hpp"
-#include "multiplication.hpp"
+#include "subtraction_template.hpp"
+#include "multiplication_template.hpp"
 
 template
 <
@@ -18,12 +18,22 @@ struct BigNumberOps
 
   Container sub(Container& l, Container& r)
   {
-    return subtract(l, r, ConvertFromInt, ConvertToInt);
+    return subtract<Container, ConvertFromInt, ConvertToInt>(l, r);
   }
   Container mul(Container& l, Container& r)
   {
-    return multiply(l, r, ConvertFromInt, ConvertToInt);
+    return multiply<Container, ConvertFromInt, ConvertToInt>(l, r);
   }
 };
+
+static inline char convertFromInt(unsigned int i)
+{
+  return i + '0';
+}
+static inline unsigned int convertToInt(char c)
+{
+  return c - '0';
+}
+
 
 #endif //_BIGNUMBEROPS_HPP_

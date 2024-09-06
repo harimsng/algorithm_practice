@@ -1,17 +1,16 @@
-#ifndef _SUBTRACTION_HPP_
-# define _SUBTRACTION_HPP_
+#ifndef _SUBTRACTION_TEMPLATE_HPP_
+# define _SUBTRACTION_TEMPLATE_HPP_
 
 #include <utility>
 
-template <typename container>
-container
-subtract
-(
-  container& left,
-  container& right,
+template
+<
+  typename container,
   typename container::value_type convertFromInt(unsigned int),
   unsigned int convertToInt(typename container::value_type)
-) {
+>
+container subtract (container& left, container& right)
+{
   container result;
   bool negative = false;
 
@@ -79,4 +78,4 @@ subtract
   return result;
 }
 
-#endif //_SUBTRACTION_HPP_
+#endif //_SUBTRACTION_TEMPLATE_HPP_

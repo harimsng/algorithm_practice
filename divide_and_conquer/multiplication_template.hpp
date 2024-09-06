@@ -1,17 +1,16 @@
-#ifndef _MULTIPLICATION_HPP_
-# define _MULTIPLICATION_HPP_
+#ifndef _MULTIPLICATION_TEMPLATE_HPP_
+# define _MULTIPLICATION_TEMPLATE_HPP_
 
 #include <utility>
 
-template <typename container>
-container
-multiply
-(
-  container& left,
-  container& right,
+template
+<
+  typename container,
   typename container::value_type convertFromInt(unsigned int),
   unsigned int convertToInt(typename container::value_type)
-) {
+>
+container multiply (container& left, container& right)
+{
   container result(left.size() + right.size(), convertFromInt(0));
 
   typename container::reverse_iterator lri = left.rbegin();
@@ -57,4 +56,4 @@ multiply
   return result;
 }
 
-#endif //_MULTIPLICATION_HPP_
+#endif //_MULTIPLICATION_TEMPLATE_HPP_

@@ -13,7 +13,7 @@ ops = {'-', '*'}
 
 rangeArr = array.array('I')
 rangeArr.append(1)
-for i in range(12):
+for i in range(15):
     rangeArr.append(rangeArr[i] * 2)
 
 addr, len = rangeArr.buffer_info()
