@@ -1,0 +1,5 @@
+unexpected integer overflow case
+input N range [1, 500000]
+sum of 1, 2, ..., N is larger than INT_MAX
+occurrences of 'int' had to be fixed.
+int in typedef, int in the middle of the code.
