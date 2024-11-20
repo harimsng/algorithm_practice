@@ -1,5 +1,12 @@
-unexpected integer overflow case
+case: unexpected integer overflow
 input N range [1, 500000]
 sum of 1, 2, ..., N is larger than INT_MAX
 occurrences of 'int' had to be fixed.
 int in typedef, int in the middle of the code.
+
+case: tree
+1. number of edges is always less than number of vertice.
+2. compare prevVertex and nextVertex to have correct tree traversal path.
+
+case: LCS loop template
+aware of index
